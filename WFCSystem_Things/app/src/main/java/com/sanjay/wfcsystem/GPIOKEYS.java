@@ -5,11 +5,8 @@ package com.sanjay.wfcsystem;
  */
 
 public interface GPIOKEYS {
-    String WATER_LEVEL_0 = "GPIO4_IO19";
-    String WATER_LEVEL_25 = "GPIO5_IO02";
-    String WATER_LEVEL_50 = "GPIO1_IO18";
-    String WATER_LEVEL_75 = "GPIO2_IO02";
-    String WATER_LEVEL_100 = "GPIO2_IO03";
+    String ECHO_PIN = "GPIO4_IO19";//35
+    String TRIGGER_PIN = "GPIO1_IO18";//37
     String PUMP_SWITCH_GPIO = "GPIO4_IO23";
 }
 //33 = "GPIO4_IO23"
