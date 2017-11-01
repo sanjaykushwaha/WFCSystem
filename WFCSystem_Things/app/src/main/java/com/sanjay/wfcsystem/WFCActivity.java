@@ -90,6 +90,7 @@ public class WFCActivity extends AppCompatActivity implements DistanceListener{
                 oldDistance = distance;
                 int precentage = ((HEIGHT_OF_SENSOR_FROM_BOTTOM - distance) / HEIGHT_OF_CONTAINER) * 100;
                 wfcSystem.setWaterLevel(precentage);
+                databaseRef.setValue(wfcSystem);
             }
         }
     }
