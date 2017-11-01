@@ -17,12 +17,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 public class WFCActivity extends AppCompatActivity implements DistanceListener{
+    private final int HEIGHT_OF_SENSOR_FROM_BOTTOM = 60;// Height of sensor position from tank bottom(in cm)
+    private final int HEIGHT_OF_CONTAINER = 15;
+    static final float ALPHA = 0.15f;
     private Gpio mPumpGPIO; //GPIO for Water moter
     private static final String WFCSystem_URL = "https://wfc-system.firebaseio.com/";
     private DatabaseReference databaseRef;
     private WFCSystem wfcSystem;
     private static final String TAG = "WFCActivity";
     private UltrasonicSensorDriver ultraSonicSensor;
+    private int oldDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,16 @@ public class WFCActivity extends AppCompatActivity implements DistanceListener{
 
     @Override
     public void onDistanceChange(double distanceInCm) {
+        int distance =  Integer.parseInt(String.format("%.0f", distanceInCm));
         Log.d("Distance", distanceInCm + " cm");
+        if(oldDistance != distance){
+            int diff = Math.abs(oldDistance - distance);
+            if(diff>2) {
+                oldDistance = distance;
+                int precentage = ((HEIGHT_OF_SENSOR_FROM_BOTTOM - distance) / HEIGHT_OF_CONTAINER) * 100;
+                wfcSystem.setWaterLevel(precentage);
+            }
+        }
     }
 
     @Override
